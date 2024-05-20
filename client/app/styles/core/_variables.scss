@@ -1,0 +1,217 @@
+// sass variables
+
+// Theme colors
+$theme-green: #00acac;
+$theme-gray: #f8f9fa;
+$theme-dark-gray: #cccccc;
+$theme-blue: #2979ff;
+$theme-purple: #727cb6;
+$theme-white: #f6f7f8;
+$theme-light-white: #f0f0f0;
+$theme-light-blue-white: #e8f0fe;
+
+$theme-black: #323232;
+$theme-light-black: #24292e;
+$theme-orange: #e4853f;
+$theme-yellow: #ffdd57;
+$theme-light-yellow: #fbeeca;
+$theme-pink: #ff3860;
+$theme-light-blue: #4a68aa;
+$theme-bright-red: #fb0000;
+
+$primary-color: #2962ff;
+$primary-bg: #2962ff;
+
+$secondary-color: #f8f9fa;
+$secondary-bg: #f8f9fa;
+
+$danger-color: #dc3545;
+$danger-bg: #dc3545;
+$danger-hover-bg: #c3081a;
+
+$dark-bg: $theme-black;
+$dark-hover-bg: $black;
+
+$default-color: #758696;
+$default-bg: #758696;
+
+// standard colors
+$blue: #20a8d8;
+$indigo: #6610f2 !default;
+$purple: #6f42c1 !default;
+$pink: #e83e8c !default;
+$red: #ff5454;
+$white: #fff;
+$orange: #fabb3d;
+$yellow: #ffc107 !default;
+$green: #79c447;
+$gray: #808081;
+$teal: #20c997 !default;
+$cyan: #67c2ef;
+$black: #000;
+
+$font-family: "Raleway", sans-serif;
+$font-family-heading: "Raleway", sans-serif;
+$font-family-body: "Raleway", sans-serif;
+$font-size-x-small: 12px;
+$font-size-small: 13px;
+$font-size-medium: 14px;
+$font-size-large: 15px;
+$font-size-x-large: 16px;
+$font-size-xx-large: 18px;
+$font-size-huge: 20px;
+$font-size-x-huge: 24px;
+$font-size-heading-xsmall: 14px;
+$font-size-heading-small: 16px;
+$font-size-heading-medium: 18px;
+$font-size-heading-large: 20px;
+$font-size-heading-x-large: 24px;
+$font-weight-normal: normal;
+$font-weight-bold-one: 500;
+$font-weight-bold-two: 600;
+$font-weight-bold-three: 700;
+
+// layout variables
+$btn-bg: $white;
+$btn-bg-hover: $primary-bg;
+$font-color: #65676b;
+$font-light-color: #00000026;
+$font-custom-color: $theme-black;
+$font-custom-hover-color: $theme-blue;
+$font-hover-color: $black;
+$font-focus-color: $black;
+$font-heading-color: #262626;
+$border-color-default: #e4e6eb;
+$border-color-primary: #eceef3;
+$border-hover-color: #ced9de;
+$border-focus-color: #bdcbd2;
+$separator-color: #e6e5ea;
+$dark-overflow-bg: #0006;
+$transparent-bg: #3232321f;
+$transparent-gray-bg: #f1f3f4f5;
+$transparent-white-bg: #f1f1f170;
+$hover-bg: #e3e8ea;
+$badge: $red;
+$stars: #adb5bd;
+$stars-active: #ffb302;
+$disabled-bg: #d9dbdea1;
+
+$outline-color: #7aacfe;
+$validation-color: #dc3545;
+$outline-box-shadow: 0 0 0 3px #159ce466;
+$box-shadow: 0 0 10px 0 #e6e5ea;
+$box-shadow-custom: 0 1px #e6e5ea;
+$box-shadow-primary: 0 1px 2px #00000033;
+$box-shadow-secondary: 0 0 2px #00000033;
+$border-radius-default: 3px;
+$border-radius-primary: 5px;
+$border-radius-circle: 50px;
+$line-height: 1.5;
+$letter-spacing: 0.5px;
+$border-default: 1px solid $border-color-default;
+$border-primary: 1px solid $border-color-primary;
+$layout-max-width: 1200px;
+$layout-transition-speed: 0.3s !default;
+$layout-transition-higher-speed: 0.6s !default;
+
+// icons
+$twitter: url("/images/social-icons/twitter.svg");
+$pinterest: url("/images/social-icons/pinterest.svg");
+$instagram: url("/images/social-icons/instagram.svg");
+$facebook: url("/images/social-icons/facebook.svg");
+
+$bars: url("/images/bars.png");
+$chevron-down: url("/images/chevron-down.svg");
+$close: url("/images/close.svg");
+$bag: url("/images/bag.svg");
+
+$font-weight-light: 300;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+$blue: #5e50f9;
+$indigo: #6610f2;
+$purple: #6a008a;
+$pink: #e91e63;
+$red: #f96868;
+$orange: #f2a654;
+$yellow: #f6e84e;
+$green: #46c35f;
+$teal: #58d8a3;
+$cyan: #57c7d4;
+$black: #000;
+$white: #ffffff;
+$white-smoke: #f2f7f8;
+$violet: #41478a;
+$darkslategray: #2e383e;
+$dodger-blue: #3498db;
+
+$colors: (
+  blue: $blue,
+  indigo: $indigo,
+  purple: $purple,
+  pink: $pink,
+  red: $red,
+  orange: $orange,
+  yellow: $yellow,
+  green: $green,
+  teal: $teal,
+  cyan: $cyan,
+  white: $white,
+  gray: #434a54,
+  gray-light: #aab2bd,
+  gray-lighter: #e8eff4,
+  gray-lightest: #e6e9ed,
+  gray-dark: #0f1531,
+  black: #000000,
+);
+
+$theme-colors: (
+  primary: #b66dff,
+  secondary: #d8d8d8,
+  success: #1bcfb4,
+  info: #198ae3,
+  warning: #fed713,
+  danger: #fe7c96,
+  light: #f8f9fa,
+  dark: #3e4b5b,
+);
+
+$theme-gradient-colors: (
+  primary: linear-gradient(to right, #da8cff, #9a55ff),
+  secondary: linear-gradient(to right, #e7ebf0, #868e96),
+  success: linear-gradient(to right, #84d9d2, #07cdae),
+  info: linear-gradient(to right, #90caf9, #047edf 99%),
+  warning: linear-gradient(to right, #f6e384, #ffd500),
+  danger: linear-gradient(to right, #ffbf96, #fe7096),
+  light: linear-gradient(to bottom, #f4f4f4, #e4e4e9),
+  dark: linear-gradient(89deg, #5e7188, #3e4b5b),
+);
+
+////////// COLOR SYSTEM //////////
+
+////////// COLOR VARIABLES //////////
+$content-bg: #f2edf3;
+$footer-bg: $content-bg;
+$footer-color: color(dark);
+$border-color: #ebedf2;
+$circle-border: $white;
+
+////////// COLOR VARIABLES //////////
+
+////////// SOCIAL COLORS //////////
+
+$social-colors: (
+  twitter: #2caae1,
+  facebook: #3b579d,
+  google: #dc4a38,
+  linkedin: #0177b5,
+  pinterest: #cc2127,
+  youtube: #e52d27,
+  github: #333333,
+  behance: #1769ff,
+  dribbble: #ea4c89,
+  reddit: #ff4500,
+);
+
+$card-bg-varient: #fff;
