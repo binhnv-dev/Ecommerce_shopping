@@ -25,6 +25,8 @@ module.exports = {
     key: process.env.MAILGUN_KEY,
     domain: process.env.MAILGUN_DOMAIN,
     sender: process.env.MAILGUN_EMAIL_SENDER,
+    email: process.env.MAILGUN_EMAIL,
+    password: process.env.MAILGUN_PASSWORD,
   },
   google: {
     clientID: process.env.GOOGLE_CLIENT_ID,

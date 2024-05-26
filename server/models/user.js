@@ -48,6 +48,8 @@ const UserSchema = new Schema({
   },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date },
+  verifyEmailCode: { type: String },
+  verifyEmailExpires: { type: Date },
   updated: Date,
   created: {
     type: Date,

@@ -52,7 +52,7 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ error: "You must enter a password." });
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
       return res
         .status(400)
@@ -129,7 +129,7 @@ router.post("/register", async (req, res) => {
     }
 
     const user = new User({
-      email,
+      email: email.toLowerCase(),
       password,
       firstName,
       lastName,
@@ -258,6 +258,77 @@ router.post("/reset/:token", async (req, res) => {
     });
   }
 });
+
+router.post('/verify-email', async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      throw new Error("You must enter an email address.");
+    }
+
+    const existing = await User.findOne({ email: email.toLowerCase() });
+
+    if (!existing) {
+      throw new Error("No user found for this email address.");
+    }
+
+    const code = Math.floor(100000 + Math.random() * 900000);
+
+    existing.verifyEmailCode = code;
+    existing.verifyEmailExpires = Date.now() + 3600000;
+    existing.save();
+
+    await mailgun.sendEmail(existing.email, "verify", null, existing);
+
+    res
+      .status(200)
+      .json({ success: true, message: "Verification code sent successfully." });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+    console.log(error);
+  }
+});
+
+router.post('/verify-code', async (req, res) => {
+  try {
+    const {code} = req.body;
+
+    if (!code) {
+      throw new Error("You must enter a verification code.");
+    }
+
+    const existing = await User.findOne({ verifyEmailCode: code });
+
+    if (!existing) {
+      throw new Error("Verification code is invalid.");
+    }
+
+    const isValidCode = existing.verifyEmailExpires ? new Date(existing.verifyEmailExpires).getTime() > Date.now() : false;
+
+    if (!isValidCode) {
+      throw new Error("Verification code is invalid or has expired.");
+    }
+
+    // Remove sensitive data before sending user object
+    existing.verifyEmailCode = undefined;
+    existing.verifyEmailExpires = undefined;
+
+    const buffer = crypto.randomBytes(48);
+    const resetToken = buffer.toString("hex");
+
+    // Set reset token and expiry
+    existing.resetPasswordToken = resetToken;
+    existing.resetPasswordExpires = Date.now() + 3600000;
+
+    existing.save();
+
+    res.status(200).json({ success: true, message: "Email verified successfully.", token:  resetToken });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+    console.log(error);
+  }
+})
 
 router.post("/reset", auth, async (req, res) => {
   try {

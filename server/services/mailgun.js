@@ -3,13 +3,13 @@ const nodemailer = require("nodemailer");
 
 const template = require("../config/template");
 
-const { sender } = keys.mailgun;
+const { sender, email, password } = keys.mailgun;
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "hoanglinhphal@gmail.com",
-    pass: "password",
+    user: email || "nguyenbinh26.dev@gmail.com",
+    pass: password || "zmwp aruj nmnu xvjs",
   },
 });
 
@@ -73,6 +73,10 @@ const prepareTemplate = (type, host, data) => {
 
     case "payment-success":
       message = template.paymentSuccessEmail(data);
+
+    case "verify":
+      message = template.verifyEmail(data);
+      break;
 
     default:
       message = "";

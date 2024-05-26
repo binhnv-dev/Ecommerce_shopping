@@ -107,3 +107,15 @@ exports.paymentSuccessEmail = (order) => {
 
   return message;
 };
+
+exports.verifyEmail = (data) => {
+  const message = {
+    subject: "Verify Email",
+    text: `Hi ${data.firstName}! You are requesting reset the password on Ecommerce Shopping. Your verify code is: \n` + 
+          `${data.verifyEmailCode}\n` +
+          'Please enter this code to reset your password. \n\n' +
+          'Notice: This code will be expired in 10 minutes. \n\n',
+  };
+
+  return message;
+};
