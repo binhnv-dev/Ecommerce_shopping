@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
 
 // Bring in Models & Helpers
 const User = require("../../models/user");
@@ -64,6 +66,22 @@ router.put("/", auth, async (req, res) => {
     const userDoc = await User.findOneAndUpdate(query, update, {
       new: true,
     });
+
+    if (update?.password) {
+      const { password } = update;
+      const isMatch = await bcrypt.compare(password, userDoc.password);
+      console.log(isMatch, password);
+
+      if (isMatch) {
+        return res
+          .status(400)
+          .json({ error: "Please enter your correct old password." });
+      }
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(password, salt);
+      userDoc.password = hash;
+      await userDoc.save();
+    }
 
     res.status(200).json({
       success: true,

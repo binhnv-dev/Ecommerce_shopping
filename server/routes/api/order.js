@@ -243,7 +243,7 @@ router.get("/:orderId", auth, async (req, res) => {
             path: "brand",
           },
         },
-      });
+      }).populate("user");
     }
 
     if (!orderDoc || !orderDoc.cart) {

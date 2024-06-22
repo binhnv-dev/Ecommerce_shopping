@@ -82,6 +82,7 @@ router.post("/list", async (req, res) => {
       min,
       category,
       pageNumber: page = 1,
+      isAll,
     } = req.body;
 
     const pageSize = 8;
@@ -204,6 +205,7 @@ router.post("/list", async (req, res) => {
           },
         ].concat(basicQuery)
       );
+      console.log("isAll", isAll);
       const paginateQuery = [
         { $sort: sortOrder },
         { $skip: pageSize * (productsCount.length > 8 ? page - 1 : 0) },
@@ -257,6 +259,7 @@ router.post("/list", async (req, res) => {
       totalProducts: productsCount.length,
     });
   } catch (error) {
+    console.log(error);
     res.status(400).json({
       error: "Your request could not be processed. Please try again.",
     });
