@@ -11,6 +11,85 @@ const mailgun = require("../../services/mailgun");
 
 const stripe = require("stripe")(key.stripe.secret);
 
+router.post("/create-payment-intent", auth, async (req, res) => {
+  const { amount, currency } = req.body;
+
+  try {
+    const customer = await stripe.customers.create();
+
+    const ephemeralKey = await stripe.ephemeralKeys.create(
+      { customer: customer.id },
+      { apiVersion: "2020-08-27" }
+    );
+
+    // Create a PaymentIntent
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount,
+      currency: currency,
+      customer: customer.id,
+    });
+
+    res.json({
+      paymentIntent: paymentIntent.client_secret,
+      ephemeralKey: ephemeralKey.secret,
+      customer: customer.id,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.post("/mobile/success", auth, async function (req, res) {
+  const { userId, productId, orderId,  provider, amount } = req.body;
+
+  try {
+    await Order.updateOne(
+      { _id: orderId },
+      {
+        isPaid: true,
+      }
+    );
+
+    const foundCart = await Cart.findOne({ "products._id": productId });
+    const foundCartProduct = foundCart.products.find((p) => p._id == productId);
+
+    if (foundCartProduct.status == "Not processed") {
+      await Cart.updateOne(
+        { "products._id": productId },
+        {
+          "products.$.status": "Paid",
+        }
+      );
+    }
+
+    const payment = new Payment({
+      user: userId,
+      product: productId,
+      order: orderId,
+      total: amount,
+      provider,
+    });
+
+    const newPayment = await payment.save();
+
+    await mailgun.sendEmail(
+      req.user.email,
+      "payment-success",
+      req.headers.host,
+      newPayment
+    );
+
+    res.status(201).json({
+      success: true,
+      message: "Your order has been paid successfully!",
+    });
+  } catch (err) {
+    res.status(400).json({
+      error: "Your request could not be processed. Please try again.",
+    });
+  }
+});
+
 router.post("/success", auth, async function (req, res) {
   const { userId, productId, orderId, data, provider, tokenId, amount } =
     req.body;
