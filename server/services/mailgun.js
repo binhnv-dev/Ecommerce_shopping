@@ -8,8 +8,8 @@ const { sender, email, password } = keys.mailgun;
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: email || "nguyenbinh26.dev@gmail.com",
-    pass: password || "zmwp aruj nmnu xvjs",
+    user: email || "stevestp0701@gmail.com",
+    pass: password || "rfmf xwth byal yiwc",
   },
 });
 

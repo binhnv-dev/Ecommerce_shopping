@@ -205,7 +205,7 @@ router.post("/list", async (req, res) => {
           },
         ].concat(basicQuery)
       );
-      console.log("isAll", isAll);
+
       const paginateQuery = [
         { $sort: sortOrder },
         { $skip: pageSize * (productsCount.length > 8 ? page - 1 : 0) },
