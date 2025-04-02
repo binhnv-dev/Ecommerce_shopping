@@ -4,24 +4,24 @@
  *
  */
 
-import React from "react";
+import React from 'react';
 
-import { Link } from "react-router-dom";
-import { Container } from "reactstrap";
+import { Link } from 'react-router-dom';
+import { Container } from 'reactstrap';
 
-import Newsletter from "../../../containers/Newsletter";
+import Newsletter from '../../../containers/Newsletter';
 
 const Footer = () => {
   const infoLinks = [
-    { id: 0, name: "Contact Us", to: "/contact" },
-    { id: 1, name: "Sell With Us", to: "/sell" },
-    { id: 2, name: "Shipping", to: "/shipping" },
+    { id: 0, name: 'Contact Us', to: '/contact' },
+    { id: 1, name: 'Sell With Us', to: '/sell' },
+    { id: 2, name: 'Shipping', to: '/shipping' },
   ];
 
   const footerBusinessLinks = (
     <ul className="support-links">
       <li className="footer-link">
-        <Link to="/">Account Details</Link>
+        <Link to="/">Thông tin tài khoản </Link>
       </li>
       <li className="footer-link">
         <Link to="/dashboard/orders">Orders</Link>

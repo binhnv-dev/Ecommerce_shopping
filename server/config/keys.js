@@ -1,6 +1,6 @@
 module.exports = {
   app: {
-    name: "Industrious",
+    name: 'Industrious',
     apiURL: `${process.env.BASE_API_URL}`,
     serverURL: process.env.BASE_SERVER_URL,
     clientURL: process.env.BASE_CLIENT_URL,
@@ -11,7 +11,7 @@ module.exports = {
   },
   jwt: {
     secret: process.env.JWT_SECRET,
-    tokenLife: "7d",
+    tokenLife: '7d',
   },
   stripe: {
     key: process.env.STRIPE_KEY,
@@ -25,8 +25,8 @@ module.exports = {
     key: process.env.MAILGUN_KEY,
     domain: process.env.MAILGUN_DOMAIN,
     sender: process.env.MAILGUN_EMAIL_SENDER,
-    email: process.env.MAILGUN_EMAIL,
-    password: process.env.MAILGUN_PASSWORD,
+    email: process.env.MAILGUN_EMAIL_SENDER,
+    password: process.env.EMAIL_PASSWORD,
   },
   google: {
     clientID: process.env.GOOGLE_CLIENT_ID,
