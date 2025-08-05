@@ -29,74 +29,74 @@ class Signup extends React.PureComponent {
       isSubscribed,
       signupChange,
       signUp,
-      subscribeChange
+      subscribeChange,
     } = this.props;
 
-    if (authenticated) return <Redirect to='/dashboard' />;
+    if (authenticated) return <Redirect to="/dashboard" />;
 
-    const handleSubmit = event => {
+    const handleSubmit = (event) => {
       event.preventDefault();
       signUp();
     };
 
     return (
-      <div className='signup-form'>
+      <div className="signup-form">
         {isLoading && <LoadingIndicator />}
-        <h2>Sign Up</h2>
+        <h2>Đăng ký</h2>
         <hr />
         <form onSubmit={handleSubmit} noValidate>
           <Row>
             <Col
               xs={{ size: 12, order: 2 }}
               md={{ size: '6', order: 1 }}
-              className='p-0'
+              className="p-0"
             >
-              <Col xs='12' md='12'>
+              <Col xs="12" md="12">
                 <Input
                   type={'text'}
                   error={formErrors['email']}
-                  label={'Email Address'}
+                  label={'Email'}
                   name={'email'}
-                  placeholder={'Please Enter Your Email'}
+                  placeholder={'Vui lòng nhập email đăng ký'}
                   value={signupFormData.email}
                   onInputChange={(name, value) => {
                     signupChange(name, value);
                   }}
                 />
               </Col>
-              <Col xs='12' md='12'>
+              <Col xs="12" md="12">
                 <Input
                   type={'text'}
                   error={formErrors['firstName']}
-                  label={'First Name'}
+                  label={'Họ'}
                   name={'firstName'}
-                  placeholder={'Please Enter Your First Name'}
+                  placeholder={'Vui lòng nhập họ '}
                   value={signupFormData.firstName}
                   onInputChange={(name, value) => {
                     signupChange(name, value);
                   }}
                 />
               </Col>
-              <Col xs='12' md='12'>
+              <Col xs="12" md="12">
                 <Input
                   type={'text'}
                   error={formErrors['lastName']}
-                  label={'Last Name'}
+                  label={'Tên'}
                   name={'lastName'}
-                  placeholder={'Please Enter Your Last Name'}
+                  placeholder={'Vui lòng nhập tên'}
                   value={signupFormData.lastName}
                   onInputChange={(name, value) => {
                     signupChange(name, value);
                   }}
                 />
               </Col>
-              <Col xs='12' md='12'>
+              <Col xs="12" md="12">
                 <Input
                   type={'password'}
-                  label={'Password'}
+                  label={'Mật khẩu'}
                   error={formErrors['password']}
                   name={'password'}
-                  placeholder={'Please Enter Your Password'}
+                  placeholder={'Vui lòng nhập mật khẩu'}
                   value={signupFormData.password}
                   onInputChange={(name, value) => {
                     signupChange(name, value);
@@ -107,7 +107,7 @@ class Signup extends React.PureComponent {
             <Col
               xs={{ size: 12, order: 1 }}
               md={{ size: '6', order: 2 }}
-              className='mb-2 mb-md-0'
+              className="mb-2 mb-md-0"
             >
               <SignupProvider />
             </Col>
@@ -115,19 +115,19 @@ class Signup extends React.PureComponent {
           <hr />
           <Checkbox
             id={'subscribe'}
-            label={'Subscribe to newsletter'}
+            label={'Tick để nhận thông tin mới nhất'}
             checked={isSubscribed}
             toggleCheckboxChange={subscribeChange}
           />
-          <div className='d-flex flex-column flex-md-row align-items-md-center justify-content-between'>
+          <div className="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
             <Button
-              type='submit'
-              variant='primary'
-              text='Sign Up'
+              type="submit"
+              variant="primary"
+              text="Đăng ký"
               disabled={isSubmitting}
             />
-            <Link className='mt-3 mt-md-0 redirect-link' to={'/login'}>
-              Back to login
+            <Link className="mt-3 mt-md-0 redirect-link" to={'/login'}>
+              Quay về trang đăng nhập
             </Link>
           </div>
         </form>
@@ -136,14 +136,14 @@ class Signup extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     authenticated: state.authentication.authenticated,
     signupFormData: state.signup.signupFormData,
     formErrors: state.signup.formErrors,
     isLoading: state.signup.isLoading,
     isSubmitting: state.signup.isSubmitting,
-    isSubscribed: state.signup.isSubscribed
+    isSubscribed: state.signup.isSubscribed,
   };
 };
 

@@ -4,97 +4,73 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import Slider, { SliderTooltip } from 'rc-slider';
 
 const { createSliderWithTooltip } = Slider;
 const Range = createSliderWithTooltip(Slider.Range);
 const { Handle } = Slider;
 
-const handle = props => {
+const handleChange = (props) => {
   const { value, dragging, index, ...restProps } = props;
   return (
     <SliderTooltip
-      prefixCls='rc-slider-tooltip'
+      prefixCls="rc-slider-tooltip"
       overlay={`$${value}`}
       visible={dragging}
-      placement='top'
+      placement="top"
       key={index}
     >
       <Handle value={value} {...restProps} />
     </SliderTooltip>
   );
 };
+const RangeSlider = ({ type = 'range', marks, step, defaultValue }) => {
+  const [sliderValue, setSliderValue] = useState(defaultValue || 100);
+  const [rangeValue, setRangeValue] = useState(defaultValue || [1, 500]);
 
-class RangeSlider extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sliderValue: 50,
-      rangeValue: [1, 500]
-    };
-  }
-
-  onSliderChange = v => {
-    this.setState({
-      sliderValue: v
-    });
+  const handleSliderChange = (value) => {
+    setSliderValue(value);
   };
 
-  onRangeChange = v => {
-    this.setState({
-      rangeValue: v
-    });
+  const handleRangeChange = (value) => {
+    setRangeValue(value);
   };
-
-  onAfterSliderChange = value => {
-    this.props.onChange(value);
+  const handleAfterChange = (value) => {
+    onChange?.(value);
   };
-
-  onAfterRangeChange = value => {
-    this.props.onChange(value);
-  };
-
-  render() {
-    const { type, marks, step, defaultValue } = this.props;
-    const { sliderValue, rangeValue } = this.state;
-
-    return (
-      <>
-        {type === 'slider' ? (
-          <Slider
-            className='slider'
-            dots
-            reverse
-            step={step}
-            defaultValue={defaultValue}
-            marks={marks}
-            value={sliderValue}
-            onChange={this.onSliderChange}
-            onAfterChange={this.onAfterSliderChange}
-          />
-        ) : (
-          <Range
-            className='slider'
-            pushable={100}
-            min={1}
-            max={500}
-            marks={marks}
-            handle={handle}
-            tipFormatter={value => `$${value}`}
-            defaultValue={defaultValue}
-            value={rangeValue}
-            onChange={this.onRangeChange}
-            onAfterChange={this.onAfterRangeChange}
-          />
-        )}
-      </>
-    );
-  }
-}
-
-RangeSlider.defaultProps = {
-  type: 'range'
+  return (
+    <>
+      {type === 'slider' ? (
+        <Slider
+          className="slider"
+          dots
+          min={20}
+          max={100}
+          step={step}
+          defaultValue={defaultValue}
+          marks={marks}
+          value={sliderValue}
+          onChange={handleSliderChange}
+          onAfterChange={handleAfterChange}
+        />
+      ) : (
+        <Range
+          className="slider"
+          pushable={100}
+          min={1}
+          max={500}
+          marks={marks}
+          handle={handleChange}
+          tipFormatter={(value) => `$${value}`}
+          defaultValue={defaultValue}
+          value={rangeValue}
+          onChange={handleRangeChange}
+          onAfterChange={handleAfterChange}
+        />
+      )}
+    </>
+  );
 };
 
 export default RangeSlider;

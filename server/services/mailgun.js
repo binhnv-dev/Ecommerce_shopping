@@ -19,7 +19,7 @@ exports.sendEmail = async (email, type, host, data) => {
   try {
     const message = prepareTemplate(type, host, data);
     const config = {
-      from: `Industrious Commerce <${sender}>`,
+      from: `Mei Store <${sender}>`,
       to: email,
       subject: message.subject,
       text: message.text,

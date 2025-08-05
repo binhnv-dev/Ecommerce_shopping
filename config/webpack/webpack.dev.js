@@ -3,8 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const CURRENT_WORKING_DIR = process.cwd();
-
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 module.exports = {
   mode: 'development',
@@ -12,39 +11,52 @@ module.exports = {
   output: {
     path: path.join(CURRENT_WORKING_DIR, '/dist'),
     filename: '[name].js',
-    publicPath: '/'
+    publicPath: '/',
   },
   module: {
     rules: [
       {
-        test: /\.(scss|sass|css)$/,
+        test: /\.css$/,
         use: [
           'style-loader',
-          {
-            loader: 'css-loader'
-          },
+          'css-loader',
           {
             loader: 'postcss-loader',
             options: {
-              plugins: () => [require('autoprefixer')]
-            }
+              postcssOptions: {
+                plugins: [require('autoprefixer')],
+              },
+            },
           },
-          {
-            loader: 'sass-loader'
-          }
-        ]
+        ],
       },
       {
-        test: /\.(png|jpg|jpeg|gif|svg|ico)$/,
+        test: /\.(scss|sass)$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [require('autoprefixer')],
+              },
+            },
+          },
+          'sass-loader',
+        ],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|ico)$/,
         use: [
           {
             loader: 'file-loader',
             options: {
               outputPath: 'images',
-              name: '[name].[ext]'
-            }
-          }
-        ]
+              name: '[name].[hash].[ext]',
+            },
+          },
+        ],
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
@@ -53,32 +65,19 @@ module.exports = {
             loader: 'file-loader',
             options: {
               outputPath: 'fonts',
-              name: '[name].[ext]'
-            }
-          }
-        ]
-      }
-    ]
+              name: '[name].[hash].[ext]',
+            },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(CURRENT_WORKING_DIR, 'client/public/index.html'),
-      inject: true
-    })
+      inject: true,
+    }),
   ],
-  devServer: {
-    port: PORT,
-    open: true,
-    inline: true,
-    compress: true,
-    noInfo: true,
-    hot: true,
-    disableHostCheck: false,
-    historyApiFallback: true,
-    proxy: {
-      '/api': `http://localhost:${PORT}`
-    }
-  },
-  devtool: 'eval-source-map'
+  devtool: 'eval-source-map',
 };

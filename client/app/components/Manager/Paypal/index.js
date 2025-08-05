@@ -1,50 +1,57 @@
-import React from "react";
-import PaypalExpressBtn from "react-paypal-express-checkout";
+import React from 'react';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
-export default class Paypal extends React.Component {
-  render() {
-    const { handleSuccess, order } = this.props;
+const Paypal = ({ order, handleSuccess }) => {
+  const amount = order.total;
 
-    const onSuccess = (data) => {
-      //   this.props.onSuccess(payment);
-      handleSuccess(order, data, "Paypal", order.total);
-    };
+  const onApprove = (data, actions) => {
+    return actions.order.capture().then((details) => {
+      handleSuccess(order, details, 'Paypal', amount);
+    });
+  };
 
-    const onCancel = () => {
-      console.log(order);
-    };
+  const onError = (err) => {
+    console.error('Payment Error:', err);
+  };
 
-    const onError = (err) => {
-      console.log("Error!", err);
-    };
+  const onCancel = (data) => {
+    console.log('Payment Cancelled:', data);
+  };
 
-    let env = "sandbox";
-    let currency = "USD";
-    let total = order.total;
-
-    const client = {
-      sandbox:
-        "ARdYSQ59aFp7Ha4HPOq21bLzI4Wyi_PclzGnnywcUCBHqvmAXayHOR2RSsLe3ikdbmdec1H5kDnz_2t0",
-      production:
-        "EAJeKkodSCxV53FIuyiqgCEnDS8M7BJfyyWGBKnwZp1_lJTu13NlPWA1kBW8ZLKLXHAXruZbDzCzDkfd",
-    };
-
-    return (
-      <PaypalExpressBtn
-        env={env}
-        client={client}
-        currency={currency}
-        total={total}
-        onError={onError}
-        onSuccess={onSuccess}
-        onCancel={onCancel}
+  const clientId =
+    'ARdYSQ59aFp7Ha4HPOq21bLzI4Wyi_PclzGnnywcUCBHqvmAXayHOR2RSsLe3ikdbmdec1H5kDnz_2t0';
+  return (
+    <PayPalScriptProvider
+      options={{
+        'client-id': clientId,
+        currency: 'USD',
+        intent: 'capture',
+      }}
+    >
+      <PayPalButtons
         style={{
-          size: "large",
-          color: "blue",
-          shape: "rect",
-          label: "checkout",
+          layout: 'vertical',
+          color: 'blue',
+          shape: 'rect',
+          label: 'checkout',
         }}
+        createOrder={(data, actions) => {
+          return actions.order.create({
+            purchase_units: [
+              {
+                amount: {
+                  value: amount.toString(),
+                },
+              },
+            ],
+          });
+        }}
+        onApprove={onApprove}
+        onError={onError}
+        onCancel={onCancel}
       />
-    );
-  }
-}
+    </PayPalScriptProvider>
+  );
+};
+
+export default Paypal;

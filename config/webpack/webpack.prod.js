@@ -4,7 +4,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const CURRENT_WORKING_DIR = process.cwd();
 const NODE_ENV = process.env.NODE_ENV;
@@ -14,41 +14,53 @@ module.exports = {
   mode: 'production',
   output: {
     path: path.join(CURRENT_WORKING_DIR, '/dist'),
-    filename: 'js/[name].[hash].js',
-    publicPath: '/'
+    filename: 'js/[name].[contenthash].js',
+    publicPath: '/',
   },
   module: {
     rules: [
       {
-        test: /\.(scss|sass|css)$/,
+        test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader'
-          },
+          'css-loader',
           {
             loader: 'postcss-loader',
             options: {
-              plugins: () => [require('cssnano'), require('autoprefixer')]
-            }
+              postcssOptions: {
+                plugins: [require('autoprefixer'), require('cssnano')],
+              },
+            },
           },
-          {
-            loader: 'sass-loader'
-          }
-        ]
+        ],
       },
       {
-        test: /\.(png|jpg|jpeg|gif|svg|ico)$/,
+        test: /\.(scss|sass)$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [require('autoprefixer'), require('cssnano')],
+              },
+            },
+          },
+          'sass-loader',
+        ],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|ico)$/,
         use: [
           {
             loader: 'file-loader',
             options: {
               outputPath: 'images',
-              publicPath: '../images',
-              name: '[name].[hash].[ext]'
-            }
-          }
-        ]
+              name: '[name].[hash].[ext]',
+            },
+          },
+        ],
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
@@ -57,63 +69,39 @@ module.exports = {
             loader: 'file-loader',
             options: {
               outputPath: 'fonts',
-              publicPath: '../fonts',
-              name: '[name].[hash].[ext]'
-            }
-          }
-        ]
-      }
-    ]
-  },
-  performance: {
-    hints: false,
-    maxEntrypointSize: 512000,
-    maxAssetSize: 512000
+              name: '[name].[hash].[ext]',
+            },
+          },
+        ],
+      },
+    ],
   },
   optimization: {
     minimize: true,
-    nodeEnv: 'production',
-    sideEffects: true,
-    concatenateModules: true,
-    runtimeChunk: 'single',
+    minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
     splitChunks: {
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
-          chunks: 'all'
+          chunks: 'all',
         },
         styles: {
           test: /\.css$/,
           name: 'styles',
           chunks: 'all',
-          enforce: true
-        }
-      }
+          enforce: true,
+        },
+      },
     },
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          warnings: false,
-          compress: {
-            comparisons: false
-          },
-          parse: {},
-          mangle: true,
-          output: {
-            comments: false,
-            ascii_only: true
-          }
-        }
-      })
-    ]
+    runtimeChunk: 'single',
   },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(NODE_ENV),
-        BASE_API_URL: JSON.stringify(BASE_API_URL)
-      }
+        BASE_API_URL: JSON.stringify(BASE_API_URL),
+      },
     }),
     new HtmlWebpackPlugin({
       template: path.join(CURRENT_WORKING_DIR, 'client/public/index.html'),
@@ -128,11 +116,11 @@ module.exports = {
         keepClosingSlash: true,
         minifyJS: true,
         minifyCSS: true,
-        minifyURLs: true
-      }
+        minifyURLs: true,
+      },
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[hash].css'
+      filename: 'css/[name].[contenthash].css',
     }),
     new WebpackPwaManifest({
       name: 'MERN Store',
@@ -146,23 +134,15 @@ module.exports = {
         {
           src: path.resolve('client/public/images/pwa.png'),
           destination: 'images',
-          sizes: [72, 96, 128, 144, 192, 384, 512]
+          sizes: [72, 96, 128, 144, 192, 384, 512],
         },
         {
           src: path.resolve('client/public/images/pwa.png'),
           sizes: [120, 152, 167, 180],
           destination: 'images',
-          ios: true
-        }
-      ]
+          ios: true,
+        },
+      ],
     }),
-    new OptimizeCssAssetsPlugin({
-      assetNameRegExp: /\.css$/g,
-      cssProcessor: require('cssnano'),
-      cssProcessorPluginOptions: {
-        preset: ['default', { discardComments: { removeAll: true } }]
-      },
-      canPrint: true
-    })
-  ]
+  ],
 };

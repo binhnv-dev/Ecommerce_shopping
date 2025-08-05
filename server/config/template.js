@@ -1,11 +1,11 @@
 exports.resetEmail = (host, resetToken) => {
   const message = {
-    subject: "Reset Password",
+    subject: 'Reset Password',
     text:
       `${
-        "You are receiving this because you have requested to reset your password for your account.\n\n" +
-        "Please click on the following link, or paste this into your browser to complete the process:\n\n" +
-        "http://"
+        'You are receiving this because you have requested to reset your password for your account.\n\n' +
+        'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+        'http://'
       }${host}/reset-password/${resetToken}\n\n` +
       `If you did not request this, please ignore this email and your password will remain unchanged.\n`,
   };
@@ -15,7 +15,7 @@ exports.resetEmail = (host, resetToken) => {
 
 exports.confirmResetPasswordEmail = () => {
   const message = {
-    subject: "Password Changed",
+    subject: 'Password Changed',
     text:
       `You are receiving this email because you changed your password. \n\n` +
       `If you did not request this change, please contact us immediately.`,
@@ -26,11 +26,11 @@ exports.confirmResetPasswordEmail = () => {
 
 exports.merchantSignup = (host, { resetToken, email }) => {
   const message = {
-    subject: "Merchant Registration",
+    subject: 'Merchant Registration',
     text: `${
-      "Congratulations! Your application has been accepted. Please complete your Merchant account signup by clicking on the link below. \n\n" +
-      "Please click on the following link, or paste this into your browser to complete the process:\n\n" +
-      "http://"
+      'Congratulations! Your application has been accepted. Please complete your Merchant account signup by clicking on the link below. \n\n' +
+      'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+      'http://'
     }${host}/merchant-signup/${resetToken}?email=${email}\n\n`,
   };
 
@@ -39,7 +39,7 @@ exports.merchantSignup = (host, { resetToken, email }) => {
 
 exports.merchantWelcome = (name) => {
   const message = {
-    subject: "Merchant Registration",
+    subject: 'Merchant Registration',
     text:
       `Hi ${name}! Congratulations! Your application for merchant account has been accepted. \n\n` +
       `It looks like you already have a member account with us. Please sign in with your member credentials and you will be able to see your merchant account.`,
@@ -50,7 +50,7 @@ exports.merchantWelcome = (name) => {
 
 exports.signupEmail = (name) => {
   const message = {
-    subject: "Account Registration",
+    subject: 'Account Registration',
     text: `Hi ${name.firstName} ${name.lastName}! Thank you for creating an account with us!.`,
   };
 
@@ -59,7 +59,7 @@ exports.signupEmail = (name) => {
 
 exports.newsletterSubscriptionEmail = () => {
   const message = {
-    subject: "Newsletter Subscription",
+    subject: 'Newsletter Subscription',
     text:
       `You are receiving this email because you subscribed to our newsletter. \n\n` +
       `If you did not request this change, please contact us immediately.`,
@@ -70,7 +70,7 @@ exports.newsletterSubscriptionEmail = () => {
 
 exports.contactEmail = () => {
   const message = {
-    subject: "Contact Us",
+    subject: 'Contact Us',
     text: `We received your message! Our team will contact you soon. \n\n`,
   };
 
@@ -79,7 +79,7 @@ exports.contactEmail = () => {
 
 exports.merchantApplicationEmail = () => {
   const message = {
-    subject: "Sell on Industrious Ecommerce",
+    subject: 'Sell on Mei Store',
     text: `We received your request! Our team will contact you soon. \n\n`,
   };
 
@@ -110,11 +110,12 @@ exports.paymentSuccessEmail = (order) => {
 
 exports.verifyEmail = (data) => {
   const message = {
-    subject: "Verify Email",
-    text: `Hi ${data.firstName}! You are requesting reset the password on Ecommerce Shopping. Your verify code is: \n` + 
-          `${data.verifyEmailCode}\n` +
-          'Please enter this code to reset your password. \n\n' +
-          'Notice: This code will be expired in 10 minutes. \n\n',
+    subject: 'Verify Email',
+    text:
+      `Hi ${data.firstName}! You are requesting reset the password on Ecommerce Shopping. Your verify code is: \n` +
+      `${data.verifyEmailCode}\n` +
+      'Please enter this code to reset your password. \n\n' +
+      'Notice: This code will be expired in 10 minutes. \n\n',
   };
 
   return message;

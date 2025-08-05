@@ -4,17 +4,17 @@
  *
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import { Row, Col, Button } from "reactstrap";
+import { Row, Col, Button } from 'reactstrap';
 
-import OrderMeta from "../OrderMeta";
-import OrderItems from "../OrderItems";
-import OrderSummary from "../OrderSummary";
-import Paypal from "../Paypal";
-import StripeCheckout from "react-stripe-checkout";
-import image from "../../../../public/images/industrious-logo.png";
-import key from "../../../../../server/config/keys";
+import OrderMeta from '../OrderMeta';
+import OrderItems from '../OrderItems';
+import OrderSummary from '../OrderSummary';
+import Paypal from '../Paypal';
+import StripeCheckout from 'react-stripe-checkout';
+import image from '../../../../public/images/industrious-logo.png';
+import key from '../../../../../server/config/keys';
 
 const OrderDetails = (props) => {
   const {
@@ -36,7 +36,7 @@ const OrderDetails = (props) => {
       paidOrderSuccess(
         order,
         stripeToken,
-        "Credit",
+        'Credit',
         order.total,
         stripeToken.id
       );
@@ -63,7 +63,7 @@ const OrderDetails = (props) => {
           {user?._id === order?.user && !order.isPaid ? (
             <div>
               <StripeCheckout
-                name={"Industrious"}
+                name={'Mei Store'}
                 image={image}
                 shippingAddress
                 description={`Your total is $${order.total}`}
@@ -79,13 +79,13 @@ const OrderDetails = (props) => {
               </StripeCheckout>
             </div>
           ) : (
-            ""
+            ''
           )}
 
           {user?._id === order?.user && !order.isPaid ? (
             <Paypal order={order} handleSuccess={paidOrderSuccess} />
           ) : (
-            ""
+            ''
           )}
         </Col>
       </Row>

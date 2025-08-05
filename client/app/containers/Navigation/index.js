@@ -4,13 +4,13 @@
  *
  */
 
-import React from "react";
+import React from 'react';
 
-import { connect } from "react-redux";
-import { Link, NavLink as ActiveLink, withRouter } from "react-router-dom";
-import Autosuggest from "react-autosuggest";
-import AutosuggestHighlightMatch from "autosuggest-highlight/match";
-import AutosuggestHighlightParse from "autosuggest-highlight/parse";
+import { connect } from 'react-redux';
+import { Link, NavLink as ActiveLink, withRouter } from 'react-router-dom';
+import Autosuggest from 'react-autosuggest';
+import AutosuggestHighlightMatch from 'autosuggest-highlight/match';
+import AutosuggestHighlightParse from 'autosuggest-highlight/parse';
 import {
   Container,
   Row,
@@ -24,16 +24,16 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-} from "reactstrap";
+} from 'reactstrap';
 
-import actions from "../../actions";
+import actions from '../../actions';
 
-import Button from "../../components/Common/Button";
-import CartIcon from "../../components/Common/CartIcon";
-import { BarsIcon } from "../../components/Common/Icon";
-import MiniBrand from "../../components/Store//MiniBrand";
-import Menu from "../NavigationMenu";
-import Cart from "../Cart";
+import Button from '../../components/Common/Button';
+import CartIcon from '../../components/Common/CartIcon';
+import { BarsIcon } from '../../components/Common/Icon';
+import MiniBrand from '../../components/Store//MiniBrand';
+import Menu from '../NavigationMenu';
+import Cart from '../Cart';
 
 class Navigation extends React.PureComponent {
   componentDidMount() {
@@ -64,7 +64,7 @@ class Navigation extends React.PureComponent {
         <div>
           {parts.map((part, index) => {
             const className = part.highlight
-              ? "react-autosuggest__suggestion-match"
+              ? 'react-autosuggest__suggestion-match'
               : null;
             return (
               <span className={className} key={index}>
@@ -84,7 +84,7 @@ class Navigation extends React.PureComponent {
             src={`${
               suggestion.imageUrl
                 ? suggestion.imageUrl
-                : "/images/placeholder-image.png"
+                : '/images/placeholder-image.png'
             }`}
           />
           <div>
@@ -128,7 +128,7 @@ class Navigation extends React.PureComponent {
     } = this.props;
 
     const inputProps = {
-      placeholder: "Search Products",
+      placeholder: 'Tìm kiếm sản phẩm',
       value: searchValue,
       onChange: (_, { newValue }) => {
         onSearch(newValue);
@@ -142,15 +142,15 @@ class Navigation extends React.PureComponent {
             <Row>
               <Col md="4" className="text-center d-none d-md-block">
                 <i className="fa fa-truck" />
-                <span>Free Shipping</span>
+                <span>Miễn phí giao hàng</span>
               </Col>
               <Col md="4" className="text-center d-none d-md-block">
                 <i className="fa fa-credit-card" />
-                <span>Payment Methods</span>
+                <span>Phương thức thanh toán</span>
               </Col>
               <Col md="4" className="text-center d-none d-md-block">
                 <i className="fa fa-phone" />
-                <span>Call us 0981752068</span>
+                <span>Liên hệ</span>
               </Col>
               <Col xs="12" className="text-center d-block d-md-none">
                 <i className="fa fa-phone" />
@@ -179,7 +179,7 @@ class Navigation extends React.PureComponent {
                   />
                 )}
                 <Link to="/">
-                  <h1 className="logo">Industrious</h1>
+                  <h1 className="logo">Mei Store</h1>
                 </Link>
               </div>
             </Col>
@@ -225,7 +225,6 @@ class Navigation extends React.PureComponent {
               sm={{ size: 12, order: 2 }}
               md={{ size: 9, order: 1 }}
               lg={{ size: 4, order: 3 }}
-              // className='px-0'
             >
               <Navbar color="light" light expand="md" className="mt-1 mt-md-0">
                 <CartIcon
@@ -242,7 +241,7 @@ class Navigation extends React.PureComponent {
                       isOpen={isBrandOpen}
                     >
                       <DropdownToggle nav>
-                        Brands
+                        Thương hiệu
                         <span className="fa fa-chevron-down dropdown-caret"></span>
                       </DropdownToggle>
                       <DropdownMenu right className="nav-brand-dropdown">
@@ -261,36 +260,36 @@ class Navigation extends React.PureComponent {
                       to="/shop"
                       activeClassName="active"
                     >
-                      Shop
+                      Sản phẩm
                     </NavLink>
                   </NavItem>
                   {authenticated ? (
                     <UncontrolledDropdown nav inNavbar>
                       <DropdownToggle nav>
-                        {user.firstName ? user.firstName : "Welcome"}
+                        {user.firstName ? user.firstName : 'Chào mừng'}
                         <span className="fa fa-chevron-down dropdown-caret"></span>
                       </DropdownToggle>
                       <DropdownMenu right>
                         <DropdownItem
-                          onClick={() => history.push("/dashboard")}
+                          onClick={() => history.push('/dashboard')}
                         >
                           Dashboard
                         </DropdownItem>
-                        <DropdownItem onClick={signOut}>Sign Out</DropdownItem>
+                        <DropdownItem onClick={signOut}>Đăng xuất</DropdownItem>
                       </DropdownMenu>
                     </UncontrolledDropdown>
                   ) : (
                     <UncontrolledDropdown nav inNavbar>
                       <DropdownToggle nav>
-                        Welcome!
+                        Xin chào!
                         <span className="fa fa-chevron-down dropdown-caret"></span>
                       </DropdownToggle>
                       <DropdownMenu right>
-                        <DropdownItem onClick={() => history.push("/login")}>
-                          Login
+                        <DropdownItem onClick={() => history.push('/login')}>
+                          Đăng nhập
                         </DropdownItem>
-                        <DropdownItem onClick={() => history.push("/register")}>
-                          Sign Up
+                        <DropdownItem onClick={() => history.push('/register')}>
+                          Đăng ký
                         </DropdownItem>
                       </DropdownMenu>
                     </UncontrolledDropdown>
@@ -303,7 +302,7 @@ class Navigation extends React.PureComponent {
 
         {/* hidden cart drawer */}
         <div
-          className={isCartOpen ? "mini-cart-open" : "hidden-mini-cart"}
+          className={isCartOpen ? 'mini-cart-open' : 'hidden-mini-cart'}
           aria-hidden={`${isCartOpen ? false : true}`}
         >
           <div className="mini-cart">
@@ -311,7 +310,7 @@ class Navigation extends React.PureComponent {
           </div>
           <div
             className={
-              isCartOpen ? "drawer-backdrop dark-overflow" : "drawer-backdrop"
+              isCartOpen ? 'drawer-backdrop dark-overflow' : 'drawer-backdrop'
             }
             onClick={toggleCart}
           />
@@ -319,7 +318,7 @@ class Navigation extends React.PureComponent {
 
         {/* hidden menu drawer */}
         <div
-          className={isMenuOpen ? "mini-menu-open" : "hidden-mini-menu"}
+          className={isMenuOpen ? 'mini-menu-open' : 'hidden-mini-menu'}
           aria-hidden={`${isMenuOpen ? false : true}`}
         >
           <div className="mini-menu">
@@ -327,7 +326,7 @@ class Navigation extends React.PureComponent {
           </div>
           <div
             className={
-              isMenuOpen ? "drawer-backdrop dark-overflow" : "drawer-backdrop"
+              isMenuOpen ? 'drawer-backdrop dark-overflow' : 'drawer-backdrop'
             }
             onClick={toggleMenu}
           />

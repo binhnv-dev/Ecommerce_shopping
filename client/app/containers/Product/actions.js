@@ -1,12 +1,6 @@
-/*
- *
- * Product actions
- *
- */
-
-import { goBack } from "connected-react-router";
-import { success } from "react-notification-system-redux";
-import axios from "axios";
+import { goBack } from 'connected-react-router';
+import { success } from 'react-notification-system-redux';
+import axios from 'axios';
 
 import {
   FETCH_PRODUCTS,
@@ -25,14 +19,14 @@ import {
   SET_PRODUCTS_LOADING,
   SET_ADVANCED_FILTERS,
   RESET_ADVANCED_FILTERS,
-} from "./constants";
+} from './constants';
 
-import handleError from "../../utils/error";
+import handleError from '../../utils/error';
 import {
   formatSelectOptions,
   unformatSelectOptions,
-} from "../../helpers/select";
-import { allFieldsValidation } from "../../utils/validation";
+} from '../../helpers/select';
+import { allFieldsValidation } from '../../utils/validation';
 
 export const productChange = (name, value) => {
   let formData = {};
@@ -93,7 +87,7 @@ export const fetchProducts = () => {
 export const filterProducts = (n, v) => {
   return async (dispatch, getState) => {
     try {
-      n === undefined ? dispatch({ type: RESET_ADVANCED_FILTERS }) : "";
+      n === undefined ? dispatch({ type: RESET_ADVANCED_FILTERS }) : '';
 
       const s = getState().product.advancedFilters;
       let payload = productsFilterOrganizer(n, v, s);
@@ -140,7 +134,7 @@ export const fetchProduct = (id) => {
       const brandData = formatSelectOptions(
         isBrand && [brand],
         !isBrand,
-        "fetchProduct"
+        'fetchProduct'
       );
 
       response.data.product.brand = brandData[0];
@@ -230,13 +224,13 @@ export const addProduct = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        sku: "required",
-        name: "required",
-        description: "required|max:200",
-        quantity: "required|numeric",
-        price: "required|numeric",
-        taxable: "required",
-        image: "required",
+        sku: 'required',
+        name: 'required',
+        description: 'required|max:200',
+        quantity: 'required|numeric',
+        price: 'required|numeric',
+        taxable: 'required',
+        image: 'required',
       };
 
       const product = getState().product.productFormData;
@@ -255,24 +249,23 @@ export const addProduct = () => {
         isActive: product.isActive,
         taxable: product.taxable.value,
         brand:
-          user.role !== "ROLE_MERCHANT"
+          user.role !== 'ROLE_MERCHANT'
             ? brand != 0
               ? brand
               : null
             : brands[1].value,
       };
       const { isValid, errors } = allFieldsValidation(newProduct, rules, {
-        "required.sku": "Sku is required.",
-        "required.name": "Name is required.",
-        "required.description": "Description is required.",
-        "max.description":
-          "Description may not be greater than 200 characters.",
-        "required.quantity": "Quantity is required.",
-        "required.price": "Price is required.",
-        "required.taxable": "Taxable is required.",
-        "required.image": "Please upload files with jpg, jpeg, png format.",
+        'required.sku': 'Sku is required.',
+        'required.name': 'Name is required.',
+        'required.description': 'Description is required.',
+        'max.description':
+          'Description may not be greater than 200 characters.',
+        'required.quantity': 'Quantity is required.',
+        'required.price': 'Price is required.',
+        'required.taxable': 'Taxable is required.',
+        'required.image': 'Please upload files with jpg, jpeg, png format.',
       });
-
 
       if (!isValid) {
         return dispatch({ type: SET_PRODUCT_FORM_ERRORS, payload: errors });
@@ -281,7 +274,7 @@ export const addProduct = () => {
       if (newProduct.image) {
         for (const key in newProduct) {
           if (newProduct.hasOwnProperty(key)) {
-            if (key === "brand" && newProduct[key] === null) {
+            if (key === 'brand' && newProduct[key] === null) {
               continue;
             } else {
               formData.set(key, newProduct[key]);
@@ -291,12 +284,12 @@ export const addProduct = () => {
       }
 
       const response = await axios.post(`/api/product/add`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
 
       const successfulOptions = {
         title: `${response.data.message}`,
-        position: "tr",
+        position: 'tr',
         autoDismiss: 1,
       };
 
@@ -320,11 +313,11 @@ export const updateProduct = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        name: "required",
-        description: "required|max:200",
-        quantity: "required|numeric",
-        price: "required|numeric",
-        taxable: "required",
+        name: 'required',
+        description: 'required|max:200',
+        quantity: 'required|numeric',
+        price: 'required|numeric',
+        taxable: 'required',
       };
 
       const product = getState().product.product;
@@ -341,13 +334,13 @@ export const updateProduct = () => {
       };
 
       const { isValid, errors } = allFieldsValidation(newProduct, rules, {
-        "required.name": "Name is required.",
-        "required.description": "Description is required.",
-        "max.description":
-          "Description may not be greater than 200 characters.",
-        "required.quantity": "Quantity is required.",
-        "required.price": "Price is required.",
-        "required.taxable": "Taxable is required.",
+        'required.name': 'Name is required.',
+        'required.description': 'Description is required.',
+        'max.description':
+          'Description may not be greater than 200 characters.',
+        'required.quantity': 'Quantity is required.',
+        'required.price': 'Price is required.',
+        'required.taxable': 'Taxable is required.',
       });
 
       if (!isValid) {
@@ -363,7 +356,7 @@ export const updateProduct = () => {
 
       const successfulOptions = {
         title: `${response.data.message}`,
-        position: "tr",
+        position: 'tr',
         autoDismiss: 1,
       };
 
@@ -390,7 +383,7 @@ export const activateProduct = (id, value) => {
 
       const successfulOptions = {
         title: `${response.data.message}`,
-        position: "tr",
+        position: 'tr',
         autoDismiss: 1,
       };
 
@@ -411,7 +404,7 @@ export const deleteProduct = (id) => {
 
       const successfulOptions = {
         title: `${response.data.message}`,
-        position: "tr",
+        position: 'tr',
         autoDismiss: 1,
       };
 
@@ -432,7 +425,7 @@ export const deleteProduct = (id) => {
 // TODO: Need improvement
 const productsFilterOrganizer = (n, v, s) => {
   switch (n) {
-    case "category":
+    case 'category':
       return {
         name: s.name,
         category: v,
@@ -443,7 +436,7 @@ const productsFilterOrganizer = (n, v, s) => {
         order: s.order,
         pageNumber: 1, //s.pageNumber
       };
-    case "brand":
+    case 'brand':
       return {
         name: s.name,
         category: s.category,
@@ -454,7 +447,7 @@ const productsFilterOrganizer = (n, v, s) => {
         order: s.order,
         pageNumber: s.pageNumber,
       };
-    case "sorting":
+    case 'sorting':
       return {
         name: s.name,
         category: s.category,
@@ -465,7 +458,7 @@ const productsFilterOrganizer = (n, v, s) => {
         order: v,
         pageNumber: s.pageNumber,
       };
-    case "price":
+    case 'price':
       return {
         name: s.name,
         category: s.category,
@@ -476,7 +469,7 @@ const productsFilterOrganizer = (n, v, s) => {
         order: s.order,
         pageNumber: s.pageNumber,
       };
-    case "rating":
+    case 'rating':
       return {
         name: s.name,
         category: s.category,
@@ -487,7 +480,7 @@ const productsFilterOrganizer = (n, v, s) => {
         order: s.order,
         pageNumber: s.pageNumber,
       };
-    case "pagination":
+    case 'pagination':
       return {
         name: s.name,
         category: s.category,

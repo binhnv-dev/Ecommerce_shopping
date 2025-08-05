@@ -4,22 +4,22 @@
  *
  */
 
-import React from "react";
+import React from 'react';
 
 import {
   EmailShareButton,
   TwitterShareButton,
   WhatsappShareButton,
   FacebookShareButton,
-} from "react-share";
+} from 'react-share';
 
 const SocialShare = (props) => {
   const { product } = props;
 
   const shareMsg = `I ♥ ${
     product.name
-  } product on Industrious Commerce!  Here's the link, ${
-    window.location.protocol !== "https" ? "http" : "https"
+  } product on Mei Store!  Here's the link, ${
+    window.location.protocol !== 'https' ? 'http' : 'https'
   }://${window.location.host}/product/${product.slug}`;
 
   return (

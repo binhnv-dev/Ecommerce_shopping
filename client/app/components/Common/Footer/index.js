@@ -1,34 +1,12 @@
-/**
- *
- * Footer
- *
- */
-
 import React from 'react';
 
 import { Link } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
+import { infoLinks } from '../../../constants';
 import Newsletter from '../../../containers/Newsletter';
 
 const Footer = () => {
-  const infoLinks = [
-    { id: 0, name: 'Contact Us', to: '/contact' },
-    { id: 1, name: 'Sell With Us', to: '/sell' },
-    { id: 2, name: 'Shipping', to: '/shipping' },
-  ];
-
-  const footerBusinessLinks = (
-    <ul className="support-links">
-      <li className="footer-link">
-        <Link to="/">Thông tin tài khoản </Link>
-      </li>
-      <li className="footer-link">
-        <Link to="/dashboard/orders">Orders</Link>
-      </li>
-    </ul>
-  );
-
   const footerLinks = infoLinks.map((item) => (
     <li key={item.id} className="footer-link">
       <Link key={item.id} to={item.to}>
@@ -43,7 +21,7 @@ const Footer = () => {
         <div className="footer-content">
           <div className="footer-block">
             <div className="block-title">
-              <h2>Customer Service</h2>
+              <h2>Dịch vu khách hàng</h2>
             </div>
             <div className="block-content">
               <ul>{footerLinks}</ul>
@@ -59,13 +37,13 @@ const Footer = () => {
           </div>
           <div className="footer-block">
             <div className="block-title">
-              <h2>Newsletter</h2>
+              <h2>Tin tức mới</h2>
               <Newsletter />
             </div>
           </div>
         </div>
         <div className="footer-copyright">
-          <span>© {new Date().getFullYear()} Industrious Store</span>
+          <span>© {new Date().getFullYear()} Mei Store</span>
         </div>
         <ul className="footer-social-item">
           <li>
